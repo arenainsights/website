@@ -9,7 +9,9 @@ export default class LandingPage extends Component<ILandingPageProps, ILandingPa
   public render() {
     return (<Stack>
       <StackItem>
-        <img src={"/android-chrome-512x512.png"} alt="arena insights Logo" width="20%" />
+        <Link href="/">
+          <img src={"/android-chrome-512x512.png"} alt="arena insights Logo" width="20%" />
+        </Link>
       </StackItem>
       <StackItem>
         <Link href="/bots">Bots</Link>

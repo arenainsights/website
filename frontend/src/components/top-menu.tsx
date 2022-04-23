@@ -10,7 +10,9 @@ export default class TopMenu extends Component<ITopMenuProps, ITopMenuState> {
     return (
       <Stack horizontal={true}>
         <StackItem>
-          <img src="/android-chrome-192x192.png" alt="arena insights Logo" height={"100px"} />
+          <Link href="/">
+            <img src="/android-chrome-192x192.png" alt="arena insights Logo" height={"100px"} />
+          </Link>
         </StackItem>
         <StackItem>
           <Stack>
