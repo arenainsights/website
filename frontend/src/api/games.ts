@@ -1,7 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { baseUrl } from ".";
-import { IBotInfo } from "./bots";
-
+import { IBotInfo } from "../../../backend/src/models/bot-info-model";
 
 
 export interface ResponseGetGames {

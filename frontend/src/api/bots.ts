@@ -1,33 +1,9 @@
 import axios, { AxiosResponse } from "axios";
 import { baseUrl } from ".";
-
-export interface IBotInfo {
-  codeId: string;
-  userId: string;
-  arenaId: string;
-  rating: number;
-  version: number;
-}
+import { IBotInfoExtended } from "../../../backend/src/controllers/bots";
 
 export interface ResponseGetBots {
-  bots: IBotInfo[];
-}
-
-export interface IBotArenaInfo {
-  arenaId: string;
-  name: string;
-  advanced: boolean;
-  active: boolean;
-}
-
-export interface IBotUserInfo {
-  userId: string;
-  username: string;
-}
-
-export interface IBotInfoExtended extends IBotInfo {
-  arena: IBotArenaInfo;
-  user: IBotUserInfo;
+  bots: IBotInfoExtended[];
 }
 
 export const getAllBots = async (): Promise<AxiosResponse<ResponseGetBots>> => {

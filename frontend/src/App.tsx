@@ -1,7 +1,8 @@
 import { initializeIcons } from '@fluentui/font-icons-mdl2';
 import { Nav, Stack, StackItem } from '@fluentui/react';
 import React, { useEffect, useState } from 'react';
-import { getAllBots, IBotInfoExtended } from './api/bots';
+import { IBotInfoExtended } from "../../backend/src/controllers/bots";
+import { getAllBots } from './api/bots';
 import { getValidGamesWithCode, IGameInfoExtended } from './api/games';
 import './App.css';
 import BotList, { convertExtendedBotInfoToEntry } from './components/bot-list';

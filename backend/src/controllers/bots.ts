@@ -1,9 +1,26 @@
 import { Request, Response } from "express";
 import { BotInfo, IBotInfo } from "../models/bot-info-model";
 
+export interface IBotArenaInfo {
+  arenaId: string;
+  name: string;
+  advanced: boolean;
+  active: boolean;
+}
+
+export interface IBotUserInfo {
+  userId: string;
+  username: string;
+}
+
+export interface IBotInfoExtended extends IBotInfo {
+  arena: IBotArenaInfo;
+  user: IBotUserInfo;
+}
+
 export const getBots = async (req: Request, res: Response): Promise<void> => {
   try {
-    const bots: IBotInfo[] = await BotInfo.aggregate([
+    const bots: IBotInfoExtended[] = await BotInfo.aggregate([
       {
         $lookup: {
           from: "userinfos",
