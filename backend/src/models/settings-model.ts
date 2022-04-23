@@ -8,8 +8,8 @@ const SettingsSchema = new Schema({
 
 export interface ISettings {
   key: string;
-  lastRun: Date;
-  lastFullRun: Date;
+  lastRun: string;
+  lastFullRun: string;
 }
 
 export const Settings = mongoose.model('Settings', SettingsSchema);
