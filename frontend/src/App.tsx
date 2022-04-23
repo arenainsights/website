@@ -23,9 +23,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     fetchMeta();
-    console.log("cookie state", cookies.get(THEME_COOKIE_KEY), typeof cookies.get(THEME_COOKIE_KEY));
     if (cookies.get(THEME_COOKIE_KEY)) {
-      console.log("true?");
       const val = cookies.get(THEME_COOKIE_KEY);
       if (val === "true") {
         setDarkMode(true);
@@ -54,10 +52,8 @@ const App: React.FC = () => {
                 offText='light'
                 defaultChecked={cookies.get(THEME_COOKIE_KEY) === "true"}
                 onChange={(event, checked) => {
-
                   setDarkMode(checked ?? false);
                   cookies.set(THEME_COOKIE_KEY, checked ?? false);
-                  console.log("setting cookie", checked, cookies.get(THEME_COOKIE_KEY));
                 }} />
             </StackItem>
             <StackItem>
