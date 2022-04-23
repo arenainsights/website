@@ -9,6 +9,7 @@ import './App.css';
 import BotPage from './components/bot-page';
 import GamePage from './components/game-page';
 import LandingPage from './components/landing-page';
+import NotFoundPage from './components/not-found-page';
 import { darkTheme, defaultTheme } from './themes';
 
 
