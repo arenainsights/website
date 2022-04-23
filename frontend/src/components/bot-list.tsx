@@ -36,11 +36,11 @@ export const convertExtendedBotInfoToEntry = (bot: IBotInfoExtended): IBotListEn
   return entry;
 }
 
-const getDefaultColumns = () => ([
-  { key: 'arena', name: 'Arena', fieldName: 'arena', minWidth: 100, maxWidth: 200, isResizable: true },
-  { key: 'user', name: 'User', fieldName: 'user', minWidth: 100, maxWidth: 200, isResizable: true },
-  { key: 'version', name: 'Version', fieldName: 'version', minWidth: 100, maxWidth: 200, isResizable: true },
-  { key: 'rating', name: 'Rating', fieldName: 'rating', minWidth: 100, maxWidth: 200, isResizable: true },
+const getDefaultColumns = (): IColumn[] => ([
+  { key: 'arena', name: 'Arena', fieldName: 'arena', minWidth: 100, maxWidth: 200, isResizable: true, isCollapsible: false },
+  { key: 'user', name: 'User', fieldName: 'user', minWidth: 100, maxWidth: 200, isResizable: true, isCollapsible: false },
+  { key: 'version', name: 'Version', fieldName: 'version', minWidth: 100, maxWidth: 200, isResizable: true, isCollapsible: false },
+  { key: 'rating', name: 'Rating', fieldName: 'rating', minWidth: 100, maxWidth: 200, isResizable: true, isCollapsible: false },
   { key: 'lastSeen', name: 'Last Seen', fieldName: 'lastSeen', minWidth: 100, maxWidth: 200, isResizable: true },
 ]);
 
@@ -87,7 +87,6 @@ export default class BotList extends Component<IBotListProps, IBotListState> {
   public render() {
     const pages = Math.floor(this.state.bots.length / this.props.itemsPerPage);
     return (<div>
-      <span>showing {this.state.bots.length} bots</span>
       <DetailsList
         compact={true}
         items={this.getCurrentPage()}
@@ -118,6 +117,8 @@ export default class BotList extends Component<IBotListProps, IBotListState> {
         previousPageIconProps={{ iconName: 'ChevronLeft' }}
         nextPageIconProps={{ iconName: 'ChevronRight' }}
         lastPageIconProps={{ iconName: 'DoubleChevronRight' }}
-      /></div>);
+      />
+      <span>showing {this.state.bots.length} bots</span>
+    </div>);
   }
 }

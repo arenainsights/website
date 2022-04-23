@@ -28,14 +28,16 @@ const App: React.FC = () => {
   }
   return (
     <main className='App'>
-      <Stack horizontal={true}>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/bots" element={<BotPage />} />
-            <Route path="/games" element={<GamePage />} />
-          </Routes>
-        </BrowserRouter>
+      <Stack>
+        <StackItem>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/bots" element={<BotPage />} />
+              <Route path="/games" element={<GamePage />} />
+            </Routes>
+          </BrowserRouter>
+        </StackItem>
         <StackItem>
           last checked: {meta.lastRun}, last full run: {meta.lastFullRun}
         </StackItem>
