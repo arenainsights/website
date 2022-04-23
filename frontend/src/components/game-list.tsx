@@ -94,6 +94,7 @@ export default class GameList extends Component<IGameListProps, IGameListState> 
   public render() {
     const pages = Math.floor(this.state.games.length / this.props.itemsPerPage);
     return (<div>
+      <span>showing {this.state.games.length} games</span>
       <DetailsList
         compact={true}
         items={this.getCurrentPage()}
