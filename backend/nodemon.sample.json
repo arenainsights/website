@@ -1,0 +1,6 @@
+{
+  "env": {
+    "PORT": 4000,
+    "MONGO_CONNECTION_STRING": ""
+  }
+}

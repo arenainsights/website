@@ -1,0 +1,28 @@
+{
+  "name": "arenainsights.net-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "concurrently \"tsc -w\" \"nodemon dist/js/app.js\""
+  },
+  "author": "lmik",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.3",
+    "helmet": "^5.0.2",
+    "mongoose": "^6.2.11"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.12",
+    "@types/express": "^4.17.13",
+    "@types/helmet": "^4.0.0",
+    "@types/mongoose": "^5.11.97",
+    "@types/node": "^17.0.23",
+    "concurrently": "^7.1.0",
+    "nodemon": "^2.0.15",
+    "typescript": "^4.6.3"
+  }
+}
