@@ -2,6 +2,7 @@ import { CheckboxVisibility, DetailsList, DetailsListLayoutMode, IColumn } from 
 import { Pagination } from "@fluentui/react-experiments";
 import React, { Component } from "react";
 import { IBotInfoExtended } from "../../../backend/src/controllers/bots";
+import { getAllBots } from "../api/bots";
 
 
 export interface IBotListEntry {
@@ -13,13 +14,15 @@ export interface IBotListEntry {
 }
 
 export interface IBotListProps {
-  bots: IBotListEntry[];
+
   itemsPerPage: number;
 }
 
 export interface IBotListState {
   currentPage: number;
   columns: IColumn[];
+  bots: IBotListEntry[];
+  error: string | undefined;
 }
 
 export const convertExtendedBotInfoToEntry = (bot: IBotInfoExtended): IBotListEntry => {
@@ -47,17 +50,42 @@ export default class BotList extends Component<IBotListProps, IBotListState> {
     super(props);
     this.state = {
       currentPage: 0,
-      columns: getDefaultColumns()
+      columns: getDefaultColumns(),
+      bots: [],
+      error: undefined
+    }
+  }
+
+  public async componentDidMount() {
+    try {
+      const botData = await getAllBots();
+      const { data: { bots } } = botData;
+      const botsConverted = bots
+        .map(b => convertExtendedBotInfoToEntry(b))
+        .sort((a, b) => {
+          if (a.arena === b.arena) {
+            if (a.user === b.user) {
+              return a.rating - b.rating;
+            }
+            return a.user.localeCompare(b.user)
+          }
+          return a.arena.localeCompare(b.arena);
+        }
+        );
+      this.setState({ bots: botsConverted });
+    } catch (err) {
+      console.log(err);
+      this.setState({ error: `${err}` })
     }
   }
 
   private getCurrentPage() {
     const currentIndex = this.state.currentPage * this.props.itemsPerPage;
-    return this.props.bots.slice(currentIndex, currentIndex + this.props.itemsPerPage)
+    return this.state.bots.slice(currentIndex, currentIndex + this.props.itemsPerPage)
   }
 
   public render() {
-    const pages = Math.floor(this.props.bots.length / this.props.itemsPerPage);
+    const pages = Math.floor(this.state.bots.length / this.props.itemsPerPage);
     return (<div>
       <DetailsList
         compact={true}

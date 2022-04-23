@@ -1,7 +1,8 @@
 import { CheckboxVisibility, DetailsList, DetailsListLayoutMode, IColumn, Link } from "@fluentui/react";
 import { Pagination } from "@fluentui/react-experiments";
 import React, { Component } from "react";
-import { IGameInfoExtended } from "../api/games";
+import { IGameInfoExtended } from "../../../backend/src/controllers/games";
+import { getValidGamesWithCode } from "../api/games";
 
 
 export interface IGameListEntry {
@@ -13,13 +14,14 @@ export interface IGameListEntry {
 }
 
 export interface IGameListProps {
-  games: IGameListEntry[];
   itemsPerPage: number;
 }
 
 export interface IGameListState {
   currentPage: number;
   columns: IColumn[];
+  games: IGameListEntry[];
+  error: string | undefined;
 }
 
 const getGameLinkFromCode = (code: string) => `screeps-arena://game/${code}`;
@@ -66,17 +68,31 @@ export default class GameList extends Component<IGameListProps, IGameListState> 
     super(props);
     this.state = {
       currentPage: 0,
-      columns: getDefaultColumns()
+      columns: getDefaultColumns(),
+      games: [],
+      error: undefined
+    }
+  }
+
+  public async componentDidMount() {
+    try {
+      const gamesData = await getValidGamesWithCode();
+      const { data: { games } } = gamesData;
+      const gameEntries = games.map((g) => convertExtendedGameInfoToEntry(g));
+      this.setState({ games: gameEntries });
+    } catch (err) {
+      console.log(err);
+      this.setState({ error: `${err}` });
     }
   }
 
   private getCurrentPage() {
     const currentIndex = this.state.currentPage * this.props.itemsPerPage;
-    return this.props.games.slice(currentIndex, currentIndex + this.props.itemsPerPage)
+    return this.state.games.slice(currentIndex, currentIndex + this.props.itemsPerPage)
   }
 
   public render() {
-    const pages = Math.floor(this.props.games.length / this.props.itemsPerPage);
+    const pages = Math.floor(this.state.games.length / this.props.itemsPerPage);
     return (<div>
       <DetailsList
         compact={true}

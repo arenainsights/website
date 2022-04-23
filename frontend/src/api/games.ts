@@ -1,35 +1,9 @@
 import axios, { AxiosResponse } from "axios";
 import { baseUrl } from ".";
-import { IBotInfo } from "../../../backend/src/models/bot-info-model";
-
+import { IGameInfoExtended } from "../../../backend/src/controllers/games";
 
 export interface ResponseGetGames {
-  games: IGameInfo[];
-}
-
-export interface IArenaInfo {
-  id?: string;
-  arenaId: string;
-  name: string;
-  advanced: boolean;
-  active: boolean;
-  ranks: number;
-  descriptionHtml: string;
-}
-
-export interface IUserInfo {
-  userId: string;
-  username: string;
-  activeInSeasons: number;
-  ratingGamesPlayed: number;
-  famePoints: number;
-}
-
-export interface IGameInfoExtended extends Omit<IGameInfo, "users"> {
-  arena: IArenaInfo;
-  creator: IUserInfo;
-  users: IUserInfo[];
-  bots: IBotInfo[];
+  games: IGameInfoExtended[];
 }
 
 export interface IGameInfo {
