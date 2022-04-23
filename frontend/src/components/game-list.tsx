@@ -94,7 +94,7 @@ export default class GameList extends Component<IGameListProps, IGameListState> 
   public render() {
     const pages = Math.floor(this.state.games.length / this.props.itemsPerPage);
     return (<div>
-      <span>showing {this.state.games.length} games</span>
+      {this.state.games.length === 0 ? (<div>loading...</div>) : ("")}
       <DetailsList
         compact={true}
         items={this.getCurrentPage()}
@@ -136,6 +136,9 @@ export default class GameList extends Component<IGameListProps, IGameListState> 
         previousPageIconProps={{ iconName: 'ChevronLeft' }}
         nextPageIconProps={{ iconName: 'ChevronRight' }}
         lastPageIconProps={{ iconName: 'DoubleChevronRight' }}
-      /></div>);
+      />
+
+      <span>showing {this.state.games.length} games</span>
+    </div>);
   }
 }

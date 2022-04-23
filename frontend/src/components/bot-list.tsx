@@ -87,6 +87,7 @@ export default class BotList extends Component<IBotListProps, IBotListState> {
   public render() {
     const pages = Math.floor(this.state.bots.length / this.props.itemsPerPage);
     return (<div>
+      {this.state.bots.length === 0 ? (<div>loading...</div>) : ("")}
       <DetailsList
         compact={true}
         items={this.getCurrentPage()}
