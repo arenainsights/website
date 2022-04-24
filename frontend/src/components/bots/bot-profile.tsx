@@ -21,7 +21,6 @@ export default function BotProfile() {
     Legend
   );
 
-  console.log("bot profile");
   let { id } = useParams();
 
   let [profile, setProfile] = useState<IBotInfoExtended>();

@@ -1,4 +1,4 @@
-import { CheckboxVisibility, DetailsList, DetailsListLayoutMode, IColumn } from "@fluentui/react";
+import { CheckboxVisibility, DetailsList, DetailsListLayoutMode, IColumn, Link } from "@fluentui/react";
 import { Pagination } from "@fluentui/react-experiments";
 import React, { Component } from "react";
 import { IUserInfo } from "../../../../backend/src/controllers/games";
@@ -75,6 +75,16 @@ export default class UserList extends Component<IUserListProps, IUserListState> 
           } else {
             console.log("no col");
           }
+        }}
+        onRenderItemColumn={(item, index, column) => {
+          if (!column) {
+            return;
+          }
+          const value = item[column.fieldName as keyof IUserInfo] as string;
+          if (column.key === "username") {
+            return (<span><Link href={"/users/" + item.userId}>{value}</Link>          </span>);
+          }
+          return (<span>{value}</span>);
         }}
       />
       <Pagination
