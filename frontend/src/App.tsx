@@ -6,7 +6,7 @@ import Cookies from 'universal-cookie';
 import { IMeta } from '../../backend/src/models/meta-model';
 import { getCrawlerMeta } from './api/meta';
 import './App.css';
-import BotListPage from './components/bots/bot-page';
+import BotListPage from './components/bots/bot-list-page';
 import GameListPage from './components/games/game-list-page';
 import LandingPage from './components/landing-page';
 import NotFoundPage from './components/not-found-page';
