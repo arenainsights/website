@@ -12,6 +12,7 @@ import GameList from './components/games/game-list';
 import LandingPage from './components/landing-page';
 import NotFoundPage from './components/not-found-page';
 import UserList from './components/users/user-list';
+import UserProfile from './components/users/user-profile';
 import { darkTheme, defaultTheme } from './themes';
 
 
@@ -73,6 +74,7 @@ const App: React.FC = () => {
                   <Route path="/bots" element={<ContentPage content={<BotList itemsPerPage={20} />} />} />
                   <Route path="/games" element={<ContentPage content={<GameList itemsPerPage={20} />} />} />
                   <Route path="/users" element={<ContentPage content={<UserList itemsPerPage={20} />} />} />
+                  <Route path="/users/:id" element={<ContentPage content={<UserProfile />} />} />
                   <Route path="*" element={<NotFoundPage />} />
                 </Routes>
               </BrowserRouter>
