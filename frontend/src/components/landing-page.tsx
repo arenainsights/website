@@ -19,6 +19,9 @@ export default class LandingPage extends Component<ILandingPageProps, ILandingPa
       <StackItem>
         <Link href="/games">Games</Link>
       </StackItem>
+      <StackItem>
+        <Link href="/users">Users</Link>
+      </StackItem>
     </Stack>)
   }
 }
