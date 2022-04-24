@@ -6,11 +6,12 @@ import Cookies from 'universal-cookie';
 import { IMeta } from '../../backend/src/models/meta-model';
 import { getCrawlerMeta } from './api/meta';
 import './App.css';
-import BotListPage from './components/bots/bot-list-page';
-import GameListPage from './components/games/game-list-page';
+import BotList from './components/bots/bot-list';
+import ContentPage from './components/content-page';
+import GameList from './components/games/game-list';
 import LandingPage from './components/landing-page';
 import NotFoundPage from './components/not-found-page';
-import UserListPage from './components/users/user-list-page';
+import UserList from './components/users/user-list';
 import { darkTheme, defaultTheme } from './themes';
 
 
@@ -69,9 +70,9 @@ const App: React.FC = () => {
               <BrowserRouter>
                 <Routes>
                   <Route path="/" element={<LandingPage />} />
-                  <Route path="/bots" element={<BotListPage />} />
-                  <Route path="/games" element={<GameListPage />} />
-                  <Route path="/users" element={<UserListPage />} />
+                  <Route path="/bots" element={<ContentPage content={<BotList itemsPerPage={20} />} />} />
+                  <Route path="/games" element={<ContentPage content={<GameList itemsPerPage={20} />} />} />
+                  <Route path="/users" element={<ContentPage content={<UserList itemsPerPage={20} />} />} />
                   <Route path="*" element={<NotFoundPage />} />
                 </Routes>
               </BrowserRouter>
