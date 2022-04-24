@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { baseUrl } from ".";
+import { versionedBaseUrl } from ".";
 import { IGameInfoExtended } from "../../../backend/src/controllers/games";
 
 export interface ResponseGetGames {
@@ -26,7 +26,7 @@ export interface IGameInfo {
 export const getValidGamesWithCode = async (): Promise<AxiosResponse<ResponseGetGames>> => {
   try {
     const games: AxiosResponse<ResponseGetGames> = await axios.get(
-      baseUrl + "/games"
+      versionedBaseUrl + "/games"
     );
     games.data.games = games.data.games
       .filter(g => g.gameCode !== undefined && g.shared);

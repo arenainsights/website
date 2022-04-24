@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { baseUrl } from ".";
+import { versionedBaseUrl } from ".";
 import { IMeta } from "../../../backend/src/models/meta-model";
 
 export interface ResponseGetMeta {
@@ -9,7 +9,7 @@ export interface ResponseGetMeta {
 export const getCrawlerMeta = async (): Promise<AxiosResponse<ResponseGetMeta>> => {
   try {
     const meta: AxiosResponse<ResponseGetMeta> = await axios.get(
-      baseUrl + "/meta"
+      versionedBaseUrl + "/meta"
     );
     return meta;
   } catch (error) {
