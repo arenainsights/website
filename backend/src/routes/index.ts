@@ -1,5 +1,6 @@
 import { Router } from "express";
-import { getBots } from "../controllers/bots";
+import { getBotRatings } from "../controllers/botratings";
+import { getBotById, getBots } from "../controllers/bots";
 import { getGames } from "../controllers/games";
 import { getMeta } from "../controllers/meta";
 import { getUsers } from "../controllers/users";
@@ -16,6 +17,9 @@ router.get(`/${API_VERSION}/bots`, getBots);
 router.get(`/${API_VERSION}/meta`, getMeta);
 
 router.get(`/${API_VERSION}/users`, getUsers)
+
+router.get(`/${API_VERSION}/bots/:id`, getBotById);
+router.get(`/${API_VERSION}/bot-ratings/:id`, getBotRatings);
 
 
 export default router

@@ -1,4 +1,4 @@
-import { CheckboxVisibility, DetailsList, DetailsListLayoutMode, IColumn } from "@fluentui/react";
+import { CheckboxVisibility, DetailsList, DetailsListLayoutMode, IColumn, Link } from "@fluentui/react";
 import { Pagination } from "@fluentui/react-experiments";
 import React, { Component } from "react";
 import { IBotInfoExtended } from "../../../../backend/src/controllers/bots";
@@ -6,6 +6,7 @@ import { getAllBots } from "../../api/bots";
 
 
 export interface IBotListEntry {
+  codeId: string;
   arena: string;
   user: string;
   version: number;
@@ -27,6 +28,7 @@ export interface IBotListState {
 
 export const convertExtendedBotInfoToEntry = (bot: IBotInfoExtended): IBotListEntry => {
   const entry: IBotListEntry = {
+    codeId: bot.codeId,
     arena: `${bot.arena.advanced ? "Advanced" : "Basic"} ${bot.arena.name}`,
     user: bot.user.username,
     version: bot.version,
@@ -105,6 +107,16 @@ export default class BotList extends Component<IBotListProps, IBotListState> {
           } else {
             console.log("no col");
           }
+        }}
+        onRenderItemColumn={(item, index, column) => {
+          if (!column) {
+            return;
+          }
+          const value = item[column.fieldName as keyof IBotListEntry] as string;
+          if (column.key === "user") {
+            return (<span><Link href={"/bots/" + item.codeId}>{value}</Link>          </span>);
+          }
+          return (<span>{value}</span>);
         }}
       />
       <Pagination
