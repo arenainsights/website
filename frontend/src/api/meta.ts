@@ -1,9 +1,9 @@
 import axios, { AxiosResponse } from "axios";
 import { baseUrl } from ".";
-import { ISettings } from "../../../backend/src/models/meta-model";
+import { IMeta } from "../../../backend/src/models/meta-model";
 
 export interface ResponseGetMeta {
-  meta: ISettings
+  meta: IMeta
 }
 
 export const getCrawlerMeta = async (): Promise<AxiosResponse<ResponseGetMeta>> => {

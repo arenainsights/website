@@ -119,7 +119,6 @@ export default class BotList extends Component<IBotListProps, IBotListState> {
         nextPageIconProps={{ iconName: 'ChevronRight' }}
         lastPageIconProps={{ iconName: 'DoubleChevronRight' }}
       />
-      <span>showing {this.state.bots.length} bots</span>
     </div>);
   }
 }

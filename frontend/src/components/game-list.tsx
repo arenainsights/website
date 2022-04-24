@@ -137,8 +137,6 @@ export default class GameList extends Component<IGameListProps, IGameListState> 
         nextPageIconProps={{ iconName: 'ChevronRight' }}
         lastPageIconProps={{ iconName: 'DoubleChevronRight' }}
       />
-
-      <span>showing {this.state.games.length} games</span>
     </div>);
   }
 }
