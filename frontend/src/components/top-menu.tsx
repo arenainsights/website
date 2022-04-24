@@ -25,6 +25,9 @@ export default class TopMenu extends Component<ITopMenuProps, ITopMenuState> {
             <StackItem>
               <Link href="/games">Games</Link>
             </StackItem>
+            <StackItem>
+              <Link href="/users">Users</Link>
+            </StackItem>
           </Stack>
         </StackItem>
       </Stack>
