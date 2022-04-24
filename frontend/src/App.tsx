@@ -77,8 +77,10 @@ const App: React.FC = () => {
               </BrowserRouter>
             </StackItem>
             <StackItem>
-              <p>tracking: {meta.userCount} users, {meta.gameCount} games, {meta.botCount} bots</p>
-              <p>last run: {meta.lastRun}, last full run: {meta.lastFullRun}</p>
+              tracking: {meta.userCount} users, {meta.gameCount} games, {meta.botCount} bots.
+            </StackItem>
+            <StackItem>
+              scraping: last run: {meta.lastRun}, last full run: {meta.lastFullRun}
             </StackItem>
           </Stack>
         </main>
