@@ -3,7 +3,7 @@ import { Stack, StackItem, ThemeProvider, Toggle } from '@fluentui/react';
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Cookies from 'universal-cookie';
-import { ISettings } from '../../backend/src/models/settings-model';
+import { IMeta } from '../../backend/src/models/meta-model';
 import { getCrawlerMeta } from './api/meta';
 import './App.css';
 import BotPage from './components/bot-page';
@@ -19,7 +19,14 @@ const THEME_COOKIE_KEY = "darkMode";
 const cookies = new Cookies();
 
 const App: React.FC = () => {
-  let [meta, setMeta] = useState<ISettings>({ lastFullRun: (new Date(0)).toISOString(), lastRun: (new Date(0)).toISOString(), key: "" })
+  let [meta, setMeta] = useState<IMeta>({
+    lastFullRun: (new Date(0)).toISOString(),
+    lastRun: (new Date(0)).toISOString(),
+    key: "",
+    userCount: 0,
+    botCount: 0,
+    gameCount: 0
+  })
   let [darkMode, setDarkMode] = useState<boolean>(false);
 
   useEffect(() => {
@@ -36,8 +43,8 @@ const App: React.FC = () => {
 
   const fetchMeta = (): void => {
     getCrawlerMeta()
-      .then(({ data: { settings } }: ISettings | any) => {
-        setMeta(settings)
+      .then(({ data: { meta } }: IMeta | any) => {
+        setMeta(meta)
       })
       .catch((err: Error) => console.log(err))
   }
@@ -68,7 +75,8 @@ const App: React.FC = () => {
               </BrowserRouter>
             </StackItem>
             <StackItem>
-              last checked: {meta.lastRun}, last full run: {meta.lastFullRun}
+              <p>tracking: {meta.userCount} users, {meta.gameCount} games, {meta.botCount} bots</p>
+              <p>last run: {meta.lastRun}, last full run: {meta.lastFullRun}</p>
             </StackItem>
           </Stack>
         </main>

@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
-import { Settings } from "../models/settings-model";
+import { Meta } from "../models/meta-model";
 
 
-const SETTINGS_KEY = "01";
+const META_KEY = "01";
 
 export const getMeta = async (req: Request, res: Response): Promise<void> => {
   try {
-    const settings = await Settings.findOne({ key: SETTINGS_KEY });
-    res.status(200).json({ settings });
+    const meta = await Meta.findOne({ key: META_KEY });
+    res.status(200).json({ meta });
   } catch (err) {
     throw err;
   }

@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { baseUrl } from ".";
-import { ISettings } from "../../../backend/src/models/settings-model";
+import { ISettings } from "../../../backend/src/models/meta-model";
 
 export interface ResponseGetMeta {
   meta: ISettings
