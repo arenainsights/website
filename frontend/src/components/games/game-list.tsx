@@ -1,8 +1,8 @@
 import { CheckboxVisibility, DetailsList, DetailsListLayoutMode, IColumn, Link } from "@fluentui/react";
 import { Pagination } from "@fluentui/react-experiments";
 import React, { Component } from "react";
-import { IGameInfoExtended } from "../../../backend/src/controllers/games";
-import { getValidGamesWithCode } from "../api/games";
+import { IGameInfoExtended } from "../../../../backend/src/controllers/games";
+import { getValidGamesWithCode } from "../../api/games";
 
 
 export interface IGameListEntry {

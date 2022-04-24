@@ -1,12 +1,12 @@
 import { Stack, StackItem } from "@fluentui/react";
 import { Component } from "react";
-import TopMenu from "./top-menu";
+import TopMenu from "../top-menu";
 import UserList from "./user-list";
 
-export interface IUserPageProps { }
-export interface IUserPageState { }
+export interface IUserListPageProps { }
+export interface IUserListPageState { }
 
-export default class UserPage extends Component<IUserPageProps, IUserPageState> {
+export default class UserListPage extends Component<IUserListPageProps, IUserListPageState> {
 
   public render() {
     return (<Stack>

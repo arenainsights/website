@@ -1,8 +1,8 @@
 import { CheckboxVisibility, DetailsList, DetailsListLayoutMode, IColumn } from "@fluentui/react";
 import { Pagination } from "@fluentui/react-experiments";
 import React, { Component } from "react";
-import { IUserInfo } from "../../../backend/src/controllers/games";
-import { getAllUsers } from "../api/users";
+import { IUserInfo } from "../../../../backend/src/controllers/games";
+import { getAllUsers } from "../../api/users";
 
 
 export interface IUserListProps {

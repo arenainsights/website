@@ -1,12 +1,12 @@
 import { Stack, StackItem } from "@fluentui/react";
 import { Component } from "react";
+import TopMenu from "../top-menu";
 import BotList from "./bot-list";
-import TopMenu from "./top-menu";
 
-export interface IBotPageProps { }
-export interface IBotPageState { }
+export interface IBotListPageProps { }
+export interface IBotListPageState { }
 
-export default class BotPage extends Component<IBotPageProps, IBotPageState> {
+export default class BotListPage extends Component<IBotListPageProps, IBotListPageState> {
 
   public render() {
     return (<Stack>

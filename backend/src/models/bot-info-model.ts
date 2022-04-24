@@ -9,6 +9,7 @@ const BotInfoModelSchema = new Schema({
 });
 
 export interface IBotInfo {
+  _id: string;
   codeId: string;
   userId: string;
   arenaId: string;

@@ -9,6 +9,7 @@ const UserInfoModelSchema = new Schema({
 });
 
 export interface IUserInfo {
+  _id: string;
   userId: string;
   username: string;
   activeInSeasons: number;

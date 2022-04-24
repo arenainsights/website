@@ -10,7 +10,7 @@ const ArenaInfoModelSchema = new Schema({
 });
 
 export interface IArenaInfo {
-  id?: string;
+  _id: string;
   arenaId: string;
   name: string;
   advanced: boolean;

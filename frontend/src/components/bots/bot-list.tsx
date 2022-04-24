@@ -1,8 +1,8 @@
 import { CheckboxVisibility, DetailsList, DetailsListLayoutMode, IColumn } from "@fluentui/react";
 import { Pagination } from "@fluentui/react-experiments";
 import React, { Component } from "react";
-import { IBotInfoExtended } from "../../../backend/src/controllers/bots";
-import { getAllBots } from "../api/bots";
+import { IBotInfoExtended } from "../../../../backend/src/controllers/bots";
+import { getAllBots } from "../../api/bots";
 
 
 export interface IBotListEntry {

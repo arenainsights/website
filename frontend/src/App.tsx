@@ -6,11 +6,11 @@ import Cookies from 'universal-cookie';
 import { IMeta } from '../../backend/src/models/meta-model';
 import { getCrawlerMeta } from './api/meta';
 import './App.css';
-import BotPage from './components/bot-page';
-import GamePage from './components/game-page';
+import BotListPage from './components/bots/bot-page';
+import GameListPage from './components/games/game-list-page';
 import LandingPage from './components/landing-page';
 import NotFoundPage from './components/not-found-page';
-import UserPage from './components/user-page';
+import UserListPage from './components/users/user-list-page';
 import { darkTheme, defaultTheme } from './themes';
 
 
@@ -69,9 +69,9 @@ const App: React.FC = () => {
               <BrowserRouter>
                 <Routes>
                   <Route path="/" element={<LandingPage />} />
-                  <Route path="/bots" element={<BotPage />} />
-                  <Route path="/games" element={<GamePage />} />
-                  <Route path="/users" element={<UserPage />} />
+                  <Route path="/bots" element={<BotListPage />} />
+                  <Route path="/games" element={<GameListPage />} />
+                  <Route path="/users" element={<UserListPage />} />
                   <Route path="*" element={<NotFoundPage />} />
                 </Routes>
               </BrowserRouter>
