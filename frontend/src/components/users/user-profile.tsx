@@ -5,8 +5,10 @@ import {
 import { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 import { useParams } from "react-router-dom";
+import stc from 'string-to-color';
 import { IArenaInfo } from '../../../../backend/src/controllers/games';
 import { IUserInfoExtended } from '../../../../backend/src/controllers/users';
+import { IUserRating } from '../../../../backend/src/models/user-rating-series';
 import { getAllArenas } from "../../api/arenas";
 import { getUserById } from "../../api/users";
 
@@ -61,23 +63,56 @@ export default function UserProfile() {
     return (<div>error loading arenas</div>);
   }
 
-  const datasets = [];
+  const getDateFromRating = (rating: IUserRating) => (new Date(rating.date)).toLocaleDateString();
+
+  const labelSet = new Set<string>();
+  for (const rating of profile.ratings) {
+    labelSet.add(getDateFromRating(rating));
+  }
+  const labels = Array.from(labelSet).sort((a, b) => a.localeCompare(b));
+  const ratingDataSets = [];
+  const rankDataSets = [];
   for (const arenaInfo of profile.arenas) {
     const arena = arenaLookup ? arenaLookup[arenaInfo.arenaId] : undefined;
     if (!arena) {
       continue;
     }
-    const dataset = {
-      label: `${arena.advanced ? "Advanced" : "Basic"} ${arena.name}`,
-      data: profile?.ratings.filter(r => r.meta.arenaId === arena.arenaId).map(r => r.rating),
+    const relevantRatings = profile?.ratings.filter(r => r.meta.arenaId === arena.arenaId);
+    const ratingData = new Array(labels.length);
+    const rankData = new Array(labels.length);
+    for (const rating of relevantRatings) {
+      const date = getDateFromRating(rating);
+      const index = labels.findIndex((d) => d === date);
+      if (index >= 0) {
+        ratingData[index] = rating.rating;
+        rankData[index] = -rating.rank;
+      }
     }
-    datasets.push(dataset);
+    const label = `${arena.advanced ? "Advanced" : "Basic"} ${arena.name}`;
+    ratingDataSets.push({
+      label,
+      data: ratingData,
+      borderColor: stc(label)
+    });
+    rankDataSets.push({
+      label,
+      data: rankData,
+      borderColor: stc(label)
+    })
   };
-  console.log(datasets);
   return (
     <div>
       <div>{profile.username}</div>
-      <Line data={{ datasets }} />
+      <div>Rating over Time</div>
+      <Line data={{
+        labels,
+        datasets: ratingDataSets
+      }} />
+      <div>Rank over Time</div>
+      <Line data={{
+        labels,
+        datasets: rankDataSets
+      }} />
     </div>
   )
 }
