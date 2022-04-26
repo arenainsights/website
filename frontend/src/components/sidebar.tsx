@@ -1,42 +1,35 @@
 import BarChartIcon from '@mui/icons-material/BarChart';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import LayersIcon from '@mui/icons-material/Layers';
 import PeopleIcon from '@mui/icons-material/People';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import SmartToyIcon from '@mui/icons-material/SmartToy';
 import { ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import React from "react";
 
 export const sideBarItems = (
   <React.Fragment>
-    <ListItemButton>
+    <ListItemButton component="a" href="/" >
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
-      <ListItemText primary="Dashboard" secondary="test" />
+      <ListItemText primary="Home" />
     </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <ShoppingCartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Orders" />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <PeopleIcon />
-      </ListItemIcon>
-      <ListItemText primary="Customers" />
-    </ListItemButton>
-    <ListItemButton>
+    <ListItemButton component="a" href="/games">
       <ListItemIcon>
         <BarChartIcon />
       </ListItemIcon>
-      <ListItemText primary="Reports" />
+      <ListItemText primary="Shared Games" />
     </ListItemButton>
-    <ListItemButton>
+    <ListItemButton component="a" href="/users">
       <ListItemIcon>
-        <LayersIcon />
+        <PeopleIcon />
       </ListItemIcon>
-      <ListItemText primary="Integrations" />
+      <ListItemText primary="Users" />
     </ListItemButton>
-  </React.Fragment>
+    <ListItemButton component="a" href="/bots">
+      <ListItemIcon>
+        <SmartToyIcon />
+      </ListItemIcon>
+      <ListItemText primary="Bots" />
+    </ListItemButton>
+  </React.Fragment >
 );

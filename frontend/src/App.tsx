@@ -12,13 +12,13 @@ import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
 import { createTheme, styled, ThemeProvider } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { IMeta } from '../../backend/src/models/meta-model';
 import { getCrawlerMeta } from './api/meta';
 import './App.css';
 import BotList from './components/bots/bot-list';
+import BotProfile from './components/bots/bot-profile';
 import Footer from './components/footer';
 import LandingPage from './components/landing-page';
 import NotFoundPage from './components/not-found-page';
@@ -139,6 +139,7 @@ function App() {
             <Icon>
               <img src="/android-chrome-192x192.png" alt="arena insights Logo" height={"24px"} />
             </Icon>
+            {/*}
             <Typography
               component="h1"
               variant="h6"
@@ -148,6 +149,7 @@ function App() {
             >
               arenainsights.net
             </Typography>
+            {*/}
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={open}>
@@ -187,7 +189,10 @@ function App() {
                 <Routes>
                   <Route path="/" element={<LandingPage />} />
                   <Route path="/bots" element={<BotList />} />
-
+                  <Route path="/bots/:id" element={<BotProfile />} />
+                  {/*<Route path="/games" element={<GameList itemsPerPage={20} />} />
+                  <Route path="/users" element={<UserList itemsPerPage={20} />} />
+        <Route path="/users/:id" element={<UserProfile />} /> */ }
                   <Route path="*" element={<NotFoundPage />} />
                 </Routes>
               </BrowserRouter>
@@ -200,10 +205,4 @@ function App() {
   );
 }
 
-/*
-
- <Route path="/bots/:id" element={<BotProfile />} />
-                  <Route path="/games" element={<GameList itemsPerPage={20} />} />
-                  <Route path="/users" element={<UserList itemsPerPage={20} />} />
-                  <Route path="/users/:id" element={<UserProfile />} />*/
 export default App;
