@@ -1,6 +1,5 @@
-import { Stack, StackItem } from "@fluentui/react";
+import { Grid, Paper } from "@mui/material";
 import { Component } from "react";
-import TopMenu from "./top-menu";
 
 export interface INotFoundPageProps { }
 export interface INotFoundPageState { }
@@ -8,13 +7,24 @@ export interface INotFoundPageState { }
 export default class NotFoundPage extends Component<INotFoundPageProps, INotFoundPageState> {
 
   public render() {
-    return (<Stack>
-      <StackItem>
-        <TopMenu />
-      </StackItem>
-      <StackItem>
-        <p>404 - not found</p>
-      </StackItem>
-    </Stack>)
+    return (
+      <Grid container
+        spacing={0}
+        direction="column"
+        alignItems="center"
+        justifyContent="center">
+        <Grid item xs={4} >
+          <Paper
+            sx={{
+              p: 2,
+              display: 'flex',
+              flexDirection: 'column',
+            }}
+          >
+            <div>404 - not found.</div>
+          </Paper>
+        </Grid>
+      </Grid>
+    );
   }
 }
