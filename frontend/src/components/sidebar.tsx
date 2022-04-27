@@ -1,21 +1,22 @@
-import BarChartIcon from '@mui/icons-material/BarChart';
-import DashboardIcon from '@mui/icons-material/Dashboard';
+import ForumIcon from '@mui/icons-material/Forum';
+import HelpCenterIcon from '@mui/icons-material/HelpCenter';
+import LiveTvIcon from '@mui/icons-material/LiveTv';
 import PeopleIcon from '@mui/icons-material/People';
 import SmartToyIcon from '@mui/icons-material/SmartToy';
-import { ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
+import { Divider, ListItemButton, ListItemIcon, ListItemText, ListSubheader } from "@mui/material";
 import React from "react";
 
 export const sideBarItems = (
   <React.Fragment>
     <ListItemButton component="a" href="/" >
       <ListItemIcon>
-        <DashboardIcon />
+        <img src="/android-chrome-192x192.png" alt="arena insights Logo" height={"24px"} />
       </ListItemIcon>
       <ListItemText primary="Home" />
     </ListItemButton>
     <ListItemButton component="a" href="/games">
       <ListItemIcon>
-        <BarChartIcon />
+        <LiveTvIcon />
       </ListItemIcon>
       <ListItemText primary="Shared Games" />
     </ListItemButton>
@@ -30,6 +31,22 @@ export const sideBarItems = (
         <SmartToyIcon />
       </ListItemIcon>
       <ListItemText primary="Bots" />
+    </ListItemButton>
+    <Divider />
+    <ListSubheader component="div" inset>
+      other resources
+    </ListSubheader>
+    <ListItemButton component="a" href="https://wiki.screepspl.us/arena/index.php/Main_Page" target={"_blank"}>
+      <ListItemIcon>
+        <HelpCenterIcon />
+      </ListItemIcon>
+      <ListItemText primary="Community Wiki" />
+    </ListItemButton>
+    <ListItemButton component="a" href="https://discord.com/invite/screeps" target={"_blank"}>
+      <ListItemIcon>
+        <ForumIcon />
+      </ListItemIcon>
+      <ListItemText primary="Screeps Discord" />
     </ListItemButton>
   </React.Fragment >
 );
