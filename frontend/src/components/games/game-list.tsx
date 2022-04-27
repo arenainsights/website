@@ -1,8 +1,13 @@
+import BarChartIcon from '@mui/icons-material/BarChart';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import { Button, Grid, Paper } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import React, { Component } from "react";
 import { IGameInfoExtended } from "../../../../backend/src/controllers/games";
 import { getValidGamesWithCode } from "../../api/games";
+import CopyButton from "../utility/copy-button";
+
 
 
 export interface IGameListEntry {
@@ -64,12 +69,10 @@ const getDefaultColumns = (): GridColDef[] => ([
   { headerName: "Bots", field: "bots", flex: 1 },
   {
     headerName: "Action", field: "action", flex: 1, renderCell: (cellValues) => {
-      return (<span><Button href={`/games/${cellValues.row.code}`} variant="contained" color="secondary">
-        Details
-      </Button>
-        <Button href={getGameLinkFromCode(cellValues.row.code)} variant="contained" color="primary">
-          Watch
-        </Button>
+      return (<span>
+        <CopyButton toCopy={`screeps-arena://game/${cellValues.row.code}`} color="secondary" description={<ContentCopyIcon />} />
+        <Button href={`/games/${cellValues.row.code}`} variant="contained" color="secondary"> <BarChartIcon /> </Button>
+        <Button href={getGameLinkFromCode(cellValues.row.code)} variant="contained" color="primary"><PlayArrowIcon /> </Button>
       </span>
       )
     }
