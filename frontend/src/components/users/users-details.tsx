@@ -9,7 +9,6 @@ import { useParams } from "react-router-dom";
 import stc from 'string-to-color';
 import { IArenaInfo } from '../../../../backend/src/controllers/games';
 import { IUserInfoExtended } from '../../../../backend/src/controllers/users';
-import { IUserRating } from '../../../../backend/src/models/user-rating-series';
 import { getAllArenas } from "../../api/arenas";
 import { getUserById } from "../../api/users";
 
@@ -64,15 +63,16 @@ export default function UserDetails() {
     return (<div>error loading arenas</div>);
   }
 
-  const getDateFromRating = (rating: IUserRating) => (new Date(rating.date)).toLocaleDateString();
+  const getDateFromMeta = (rating: { date: string | Date }) => (new Date(rating.date)).toLocaleDateString();
 
   const labelSet = new Set<string>();
   for (const rating of profile.ratings) {
-    labelSet.add(getDateFromRating(rating));
+    labelSet.add(getDateFromMeta(rating));
   }
   const labels = Array.from(labelSet).sort((a, b) => a.localeCompare(b));
   const ratingDataSets = [];
   const rankDataSets = [];
+  const gamesPlayedDatasets = [];
   for (const arenaInfo of profile.arenas) {
     const arena = arenaLookup ? arenaLookup[arenaInfo.arenaId] : undefined;
     if (!arena) {
@@ -81,12 +81,14 @@ export default function UserDetails() {
     const relevantRatings = profile?.ratings.filter(r => r.meta.arenaId === arena.arenaId);
     const ratingData = new Array(labels.length);
     const rankData = new Array(labels.length);
+    const gamesPlayedData = new Array(labels.length);
     for (const rating of relevantRatings) {
-      const date = getDateFromRating(rating);
+      const date = getDateFromMeta(rating);
       const index = labels.findIndex((d) => d === date);
       if (index >= 0) {
         ratingData[index] = rating.rating;
         rankData[index] = -rating.rank;
+        gamesPlayedData[index] = rating.gamesPlayed;
       }
     }
     const label = `${arena.advanced ? "Advanced" : "Basic"} ${arena.name}`;
@@ -99,8 +101,45 @@ export default function UserDetails() {
       label,
       data: rankData,
       borderColor: stc(label)
+    });
+    gamesPlayedDatasets.push({
+      label,
+      data: gamesPlayedData,
+      borderColor: stc(label)
     })
   };
+
+  const globalGamesPlayedData = new Array(labels.length);
+  for (const gamesPlayed of profile.globalGamesPlayed) {
+    const date = getDateFromMeta(gamesPlayed);
+    const index = labels.findIndex((d) => d === date);
+    if (index >= 0) {
+      globalGamesPlayedData[index] = gamesPlayed.gamesPlayed;
+    }
+  }
+
+  const globalGamesPlayedDataSet = {
+    label: "Games played overall",
+    data: globalGamesPlayedData,
+    borderColor: "red"
+  }
+
+
+  const fameData = new Array(labels.length);
+  for (const fameInfo of profile.fames) {
+    const date = getDateFromMeta(fameInfo);
+    const index = labels.findIndex((d) => d === date);
+    if (index >= 0) {
+      fameData[index] = fameInfo.fame;
+    }
+  }
+
+  const fameDataSet = {
+    label: "Fame",
+    data: fameData,
+    borderColor: "yellow"
+  }
+
   return (
     <Grid container spacing={3}>
       <Grid item xs={12} >
@@ -115,6 +154,21 @@ export default function UserDetails() {
         </Paper>
 
       </Grid>
+      <Grid item xs={12} >
+        <Paper
+          sx={{
+            p: 2,
+            display: 'flex',
+            flexDirection: 'column',
+            maxHeight: "240px"
+          }}
+        >
+          <Line data={{
+            labels,
+            datasets: [globalGamesPlayedDataSet, fameDataSet]
+          }} style={{ maxHeight: "200px" }} />
+        </Paper>
+      </Grid>
       <Grid item xs={6} >
         <Paper
           sx={{
@@ -128,9 +182,8 @@ export default function UserDetails() {
             datasets: ratingDataSets
           }} />
         </Paper>
-
-
-      </Grid><Grid item xs={6} >
+      </Grid>
+      <Grid item xs={6} >
         <Paper
           sx={{
             p: 2,
@@ -146,6 +199,6 @@ export default function UserDetails() {
 
 
       </Grid>
-    </Grid>
+    </Grid >
   )
 }
