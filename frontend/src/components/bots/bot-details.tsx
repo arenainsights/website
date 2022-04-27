@@ -11,7 +11,7 @@ import { IBotRating } from "../../../../backend/src/models/bot-rating-series";
 import { getBotRatingsByCodeId } from "../../api/bot-ratings";
 import { getBotById } from "../../api/bots";
 
-export default function BotProfile() {
+export default function BotDetails() {
   ChartJS.register(
     CategoryScale,
     LinearScale,

@@ -1,4 +1,4 @@
-import { Grid, Paper } from "@mui/material";
+import { Button, Grid, Paper } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import React, { Component } from "react";
 import { IBotInfoExtended } from "../../../../backend/src/controllers/bots";
@@ -45,7 +45,15 @@ const getDefaultColumns = (): GridColDef[] => ([
   { headerName: 'User', field: 'user', flex: 1 },
   { headerName: 'Version', field: 'version', flex: 1 },
   { headerName: 'Rating', field: 'rating', flex: 1 },
-  { headerName: 'Last Seen', field: 'lastSeen', flex: 1 }]);
+  {
+    headerName: "Action", field: "action", flex: 1, renderCell: (cellValues) => {
+      return (<span><Button href={`/bots/${cellValues.row.codeId}`} variant="contained" color="secondary">
+        Details
+      </Button>
+      </span>
+      )
+    }
+  }]);
 
 export default class BotList extends Component<IBotListProps, IBotListState> {
 

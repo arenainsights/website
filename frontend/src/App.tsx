@@ -16,8 +16,8 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { IMeta } from '../../backend/src/models/meta-model';
 import { getCrawlerMeta } from './api/meta';
 import './App.css';
+import BotDetails from './components/bots/bot-details';
 import BotList from './components/bots/bot-list';
-import BotProfile from './components/bots/bot-profile';
 import NotFoundPage from './components/errors/not-found';
 import Footer from './components/footer';
 import GameDetails from './components/games/game-details';
@@ -185,7 +185,7 @@ function App() {
                 <Routes>
                   <Route path="/" element={<LandingPage />} />
                   <Route path="/bots" element={<BotList />} />
-                  <Route path="/bots/:id" element={<BotProfile />} />
+                  <Route path="/bots/:id" element={<BotDetails />} />
                   <Route path="/games" element={<GameList />} />
                   <Route path="/games/:code" element={<GameDetails />} />
                   <Route path="/users" element={<UserList />} />
