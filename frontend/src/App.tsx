@@ -18,9 +18,11 @@ import { getCrawlerMeta } from './api/meta';
 import './App.css';
 import BotList from './components/bots/bot-list';
 import BotProfile from './components/bots/bot-profile';
+import NotFoundPage from './components/errors/not-found';
 import Footer from './components/footer';
+import GameDetails from './components/games/game-details';
+import GameList from './components/games/game-list';
 import LandingPage from './components/landing-page';
-import NotFoundPage from './components/not-found-page';
 import { sideBarItems } from './components/sidebar';
 
 
@@ -182,8 +184,9 @@ function App() {
                   <Route path="/" element={<LandingPage />} />
                   <Route path="/bots" element={<BotList />} />
                   <Route path="/bots/:id" element={<BotProfile />} />
-                  {/*<Route path="/games" element={<GameList itemsPerPage={20} />} />
-                  <Route path="/users" element={<UserList itemsPerPage={20} />} />
+                  <Route path="/games" element={<GameList />} />
+                  <Route path="/games/:code" element={<GameDetails />} />
+                  {/* <Route path="/users" element={<UserList  />} />
         <Route path="/users/:id" element={<UserProfile />} /> */ }
                   <Route path="*" element={<NotFoundPage />} />
                 </Routes>
