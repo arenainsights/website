@@ -46,6 +46,7 @@ const getDefaultColumns = (): GridColDef[] => ([
   { headerName: 'Version', field: 'version', flex: 1 },
   { headerName: 'Rating', field: 'rating', flex: 1 },
   { headerName: 'Last Seen', field: 'lastSeen', flex: 1 }]);
+
 export default class BotList extends Component<IBotListProps, IBotListState> {
 
   public constructor(props: IBotListProps) {
