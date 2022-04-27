@@ -1,5 +1,6 @@
-import { CheckboxVisibility, DetailsList, DetailsListLayoutMode, IColumn, Link } from "@fluentui/react";
-import { Pagination } from "@fluentui/react-experiments";
+
+import { Button, Grid, Paper } from "@mui/material";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import React, { Component } from "react";
 import { IUserInfo } from "../../../../backend/src/controllers/games";
 import { getAllUsers } from "../../api/users";
@@ -7,21 +8,31 @@ import { getAllUsers } from "../../api/users";
 
 export interface IUserListProps {
 
-  itemsPerPage: number;
 }
 
 export interface IUserListState {
-  currentPage: number;
-  columns: IColumn[];
+  pageSize: number
+  columns: GridColDef[];
   users: IUserInfo[];
   error: string | undefined;
 }
 
-const getDefaultColumns = (): IColumn[] => ([
-  { key: 'username', name: 'User', fieldName: 'username', minWidth: 100, maxWidth: 200, isResizable: true, isCollapsible: false },
-  { key: 'ratingGamesPlayed', name: 'Rating games played', fieldName: 'ratingGamesPlayed', minWidth: 100, maxWidth: 200, isResizable: true, isCollapsible: false },
-  { key: 'activeInSeasons', name: 'Active in Seasons', fieldName: 'activeInSeasons', minWidth: 100, maxWidth: 200, isResizable: true, isCollapsible: false },
-  { key: 'famePoints', name: 'Fame', fieldName: 'famePoints', minWidth: 100, maxWidth: 200, isResizable: true, isCollapsible: false },
+const DEFAULT_PAGE_SIZE = 20;
+
+const getDefaultColumns = (): GridColDef[] => ([
+  { headerName: 'User', field: 'username', flex: 1 },
+  { headerName: 'Rating games played', field: 'ratingGamesPlayed', flex: 1 },
+  { headerName: 'Active in Seasons', field: 'activeInSeasons', flex: 1 },
+  { headerName: 'Fame', field: 'famePoints', flex: 1 },
+  {
+    headerName: "Action", field: "action", flex: 1, renderCell: (cellValues) => {
+      return (<span><Button href={`/users/${cellValues.row.userId}`} variant="contained" color="secondary">
+        Details
+      </Button>
+      </span>
+      )
+    }
+  }
 ]);
 
 export default class UserList extends Component<IUserListProps, IUserListState> {
@@ -29,7 +40,7 @@ export default class UserList extends Component<IUserListProps, IUserListState> 
   public constructor(props: IUserListProps) {
     super(props);
     this.state = {
-      currentPage: 0,
+      pageSize: DEFAULT_PAGE_SIZE,
       columns: getDefaultColumns(),
       users: [],
       error: undefined
@@ -41,7 +52,11 @@ export default class UserList extends Component<IUserListProps, IUserListState> 
       const userData = await getAllUsers();
       const { data: { users } } = userData;
       const usersConverted = users
-        .sort((a, b) => b.famePoints - a.famePoints);
+        .sort((a, b) => b.famePoints - a.famePoints)
+        .map(u => ({
+          ...u,
+          id: u.userId
+        }));
       this.setState({ users: usersConverted });
     } catch (err) {
       console.log(err);
@@ -49,56 +64,28 @@ export default class UserList extends Component<IUserListProps, IUserListState> 
     }
   }
 
-  private getCurrentPage() {
-    const currentIndex = this.state.currentPage * this.props.itemsPerPage;
-    return this.state.users.slice(currentIndex, currentIndex + this.props.itemsPerPage)
-  }
-
   public render() {
-    const pages = Math.floor(this.state.users.length / this.props.itemsPerPage);
-    return (<div>
-      {this.state.users.length === 0 ? (<div>loading...</div>) : ("")}
-      <DetailsList
-        compact={true}
-        items={this.getCurrentPage()}
-        columns={this.state.columns}
-        setKey="set"
-        layoutMode={DetailsListLayoutMode.justified}
-        ariaLabelForSelectionColumn="Toggle selection"
-        ariaLabelForSelectAllCheckbox="Toggle selection for all items"
-        checkButtonAriaLabel="select row"
-        checkboxVisibility={CheckboxVisibility.hidden}
-        onColumnResize={(col, width, index) => {
-          console.log("col resize", col, width, index);
-          if (col) {
-            col.currentWidth = width;
-          } else {
-            console.log("no col");
-          }
-        }}
-        onRenderItemColumn={(item, index, column) => {
-          if (!column) {
-            return;
-          }
-          const value = item[column.fieldName as keyof IUserInfo] as string;
-          if (column.key === "username") {
-            return (<span><Link href={"/users/" + item.userId}>{value}</Link>          </span>);
-          }
-          return (<span>{value}</span>);
-        }}
-      />
-      <Pagination
-        selectedPageIndex={this.state.currentPage}
-        pageCount={pages}
-        onPageChange={(index) => {
-          this.setState({ currentPage: index });
-        }}
-        format={"buttons"}
-        firstPageIconProps={{ iconName: 'DoubleChevronLeft' }}
-        previousPageIconProps={{ iconName: 'ChevronLeft' }}
-        nextPageIconProps={{ iconName: 'ChevronRight' }}
-        lastPageIconProps={{ iconName: 'DoubleChevronRight' }}
-      />
-    </div>);
+    return (<Grid container spacing={3}>
+      <Grid item xs={12} >
+        <Paper
+          sx={{
+            p: 2,
+            display: "flex",
+            flexDirection: "column",
+            height: "70vh",
+          }}
+        >
+          <DataGrid
+            loading={this.state.users.length === 0}
+            rows={this.state.users}
+            columns={this.state.columns}
+            pageSize={this.state.pageSize}
+            onPageSizeChange={(newPageSize) => { this.setState({ pageSize: newPageSize }) }}
+            rowsPerPageOptions={[10, DEFAULT_PAGE_SIZE, 50]}
+            pagination
+          />
+        </Paper>
+      </Grid>
+    </Grid >);
   }
 }

@@ -3,17 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@fluentui/font-icons-mdl2": "^8.3.2",
-    "@fluentui/react": "^8.66.2",
-    "@fluentui/react-experiments": "^8.8.11",
-    "@fluentui/theme": "^2.6.5",
-    "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/react": "^13.1.1",
-    "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^27.4.1",
-    "@types/node": "^16.11.27",
-    "@types/react": "^18.0.6",
-    "@types/react-dom": "^18.0.2",
+    "@emotion/react": "^11.9.0",
+    "@emotion/styled": "^11.8.1",
+    "@mui/icons-material": "^5.6.2",
+    "@mui/material": "^5.6.3",
+    "@mui/x-data-grid": "^5.10.0",
     "axios": "^0.26.1",
     "react": "^18.0.0",
     "react-chartjs-2": "^4.1.0",
@@ -22,8 +16,7 @@
     "react-scripts": "5.0.1",
     "string-to-color": "^2.2.2",
     "typescript": "^4.6.3",
-    "universal-cookie": "^4.0.4",
-    "web-vitals": "^2.1.4"
+    "universal-cookie": "^4.0.4"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -51,6 +44,9 @@
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
+    "@types/node": "^16.11.27",
+    "@types/react": "^18.0.6",
+    "@types/react-dom": "^18.0.2",
     "@types/react-router-dom": "^5.3.3"
   }
 }

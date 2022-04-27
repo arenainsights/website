@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import { IUserArenaInfo } from "../models/user-arena-info-model";
+import { IUserFame } from "../models/user-fame-series";
+import { IUserGamesPlayed } from "../models/user-games-played-series";
 import { IUserInfo, UserInfo } from "../models/user-info-model";
 import { IUserRating } from "../models/user-rating-series";
 
@@ -15,6 +17,8 @@ export const getUsers = async (req: Request, res: Response): Promise<void> => {
 export interface IUserInfoExtended extends IUserInfo {
   arenas: IUserArenaInfo[];
   ratings: IUserRating[];
+  fames: IUserFame[];
+  globalGamesPlayed: IUserGamesPlayed[]
 }
 
 
@@ -29,6 +33,22 @@ export const getUserById = async (req: Request, res: Response): Promise<void> =>
           localField: "userId",
           foreignField: "userId",
           as: "arenas"
+        }
+      },
+      {
+        $lookup: {
+          from: "userfames",
+          localField: "userId",
+          foreignField: "meta.userId",
+          as: "fames"
+        }
+      },
+      {
+        $lookup: {
+          from: "usergamesplayeds",
+          localField: "userId",
+          foreignField: "meta.userId",
+          as: "globalGamesPlayed"
         }
       },
       {

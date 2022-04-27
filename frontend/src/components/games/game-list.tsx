@@ -1,11 +1,12 @@
-import { CheckboxVisibility, DetailsList, DetailsListLayoutMode, IColumn, Link } from "@fluentui/react";
-import { Pagination } from "@fluentui/react-experiments";
+import { Button, Grid, Paper } from "@mui/material";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import React, { Component } from "react";
 import { IGameInfoExtended } from "../../../../backend/src/controllers/games";
 import { getValidGamesWithCode } from "../../api/games";
 
 
 export interface IGameListEntry {
+  id: string;
   arena: string;
   created: string;
   bots: string;
@@ -14,12 +15,13 @@ export interface IGameListEntry {
 }
 
 export interface IGameListProps {
-  itemsPerPage: number;
 }
 
+const DEFAULT_PAGE_SIZE = 20;
+
 export interface IGameListState {
-  currentPage: number;
-  columns: IColumn[];
+  pageSize: number;
+  columns: GridColDef[];
   games: IGameListEntry[];
   error: string | undefined;
 }
@@ -40,11 +42,13 @@ export const convertExtendedGameInfoToEntry = (game: IGameInfoExtended): IGameLi
     }
     botInfos.push(username);
   }
+  botInfos.sort((a, b) => a.localeCompare(b))
   let winnerInfo = "Draw";
   if (game.gameResultWinner !== 0.5) {
     winnerInfo = botInfos[game.gameResultWinner];
   }
   const entry: IGameListEntry = {
+    id: game.gameId,
     arena: `${game.arena.advanced ? "Advanced" : "Basic"} ${game.arena.name}`,
     created: game.gameCreated,
     bots: botInfos.join(" vs "),
@@ -54,12 +58,22 @@ export const convertExtendedGameInfoToEntry = (game: IGameInfoExtended): IGameLi
   return entry;
 }
 
-const getDefaultColumns = () => ([
-  { key: 'arena', name: 'Arena', fieldName: 'arena', minWidth: 100, maxWidth: 200, isResizable: true },
-  { key: 'created', name: 'Created', fieldName: 'created', minWidth: 100, maxWidth: 200, isResizable: true },
-  { key: 'bots', name: 'Bots', fieldName: 'bots', minWidth: 100, maxWidth: 200, isResizable: true },
-  { key: 'winner', name: 'Winner', fieldName: 'winner', minWidth: 100, maxWidth: 200, isResizable: true },
-  { key: 'code', name: 'Code', fieldName: 'code', minWidth: 100, maxWidth: 200, isResizable: true },
+const getDefaultColumns = (): GridColDef[] => ([
+  { headerName: "Arena", field: "arena", flex: 1 },
+  { headerName: "Created", field: "created", flex: 1 },
+  { headerName: "Bots", field: "bots", flex: 1 },
+  {
+    headerName: "Action", field: "action", flex: 1, renderCell: (cellValues) => {
+      return (<span><Button href={`/games/${cellValues.row.code}`} variant="contained" color="secondary">
+        Details
+      </Button>
+        <Button href={getGameLinkFromCode(cellValues.row.code)} variant="contained" color="primary">
+          Watch
+        </Button>
+      </span>
+      )
+    }
+  }
 ]);
 
 export default class GameList extends Component<IGameListProps, IGameListState> {
@@ -67,7 +81,7 @@ export default class GameList extends Component<IGameListProps, IGameListState> 
   public constructor(props: IGameListProps) {
     super(props);
     this.state = {
-      currentPage: 0,
+      pageSize: DEFAULT_PAGE_SIZE,
       columns: getDefaultColumns(),
       games: [],
       error: undefined
@@ -86,57 +100,28 @@ export default class GameList extends Component<IGameListProps, IGameListState> 
     }
   }
 
-  private getCurrentPage() {
-    const currentIndex = this.state.currentPage * this.props.itemsPerPage;
-    return this.state.games.slice(currentIndex, currentIndex + this.props.itemsPerPage)
-  }
-
   public render() {
-    const pages = Math.floor(this.state.games.length / this.props.itemsPerPage);
-    return (<div>
-      {this.state.games.length === 0 ? (<div>loading...</div>) : ("")}
-      <DetailsList
-        compact={true}
-        items={this.getCurrentPage()}
-        columns={this.state.columns}
-        setKey="set"
-        layoutMode={DetailsListLayoutMode.justified}
-        ariaLabelForSelectionColumn="Toggle selection"
-        ariaLabelForSelectAllCheckbox="Toggle selection for all items"
-        checkButtonAriaLabel="select row"
-        checkboxVisibility={CheckboxVisibility.hidden}
-        onColumnResize={(col, width, index) => {
-          console.log("col resize", col, width, index);
-          if (col) {
-            col.currentWidth = width;
-          } else {
-            console.log("no col");
-          }
-        }}
-        onRenderItemColumn={(item, index, column) => {
-          if (!column) {
-            return;
-          }
-          const value = item[column.fieldName as keyof IGameListEntry] as string;
-          if (column.key === "code") {
-            return (<span><span>{value}</span> <Link href={getGameLinkFromCode(value)}>Watch replay</Link>
-            </span>)
-          }
-          return (<span>{value}</span>)
-        }}
-      />
-      <Pagination
-        selectedPageIndex={this.state.currentPage}
-        pageCount={pages}
-        onPageChange={(index) => {
-          this.setState({ currentPage: index });
-        }}
-        format={"buttons"}
-        firstPageIconProps={{ iconName: 'DoubleChevronLeft' }}
-        previousPageIconProps={{ iconName: 'ChevronLeft' }}
-        nextPageIconProps={{ iconName: 'ChevronRight' }}
-        lastPageIconProps={{ iconName: 'DoubleChevronRight' }}
-      />
-    </div>);
+    return (<Grid container spacing={3}>
+      <Grid item xs={12} >
+        <Paper
+          sx={{
+            p: 2,
+            display: "flex",
+            flexDirection: "column",
+            height: "70vh",
+          }}
+        >
+          <DataGrid
+            loading={this.state.games.length === 0}
+            rows={this.state.games}
+            columns={this.state.columns}
+            pageSize={this.state.pageSize}
+            onPageSizeChange={(newPageSize) => { this.setState({ pageSize: newPageSize }) }}
+            rowsPerPageOptions={[10, DEFAULT_PAGE_SIZE, 50]}
+            pagination
+          />
+        </Paper>
+      </Grid>
+    </Grid >);
   }
 }

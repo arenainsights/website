@@ -1,11 +1,12 @@
-import { CheckboxVisibility, DetailsList, DetailsListLayoutMode, IColumn, Link } from "@fluentui/react";
-import { Pagination } from "@fluentui/react-experiments";
+import { Button, Grid, Paper } from "@mui/material";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import React, { Component } from "react";
 import { IBotInfoExtended } from "../../../../backend/src/controllers/bots";
 import { getAllBots } from "../../api/bots";
 
 
 export interface IBotListEntry {
+  id: string;
   codeId: string;
   arena: string;
   user: string;
@@ -15,19 +16,20 @@ export interface IBotListEntry {
 }
 
 export interface IBotListProps {
-
-  itemsPerPage: number;
 }
 
+const DEFAULT_PAGE_SIZE = 20;
+
 export interface IBotListState {
-  currentPage: number;
-  columns: IColumn[];
+  columns: GridColDef[];
   bots: IBotListEntry[];
   error: string | undefined;
+  pageSize: number;
 }
 
 export const convertExtendedBotInfoToEntry = (bot: IBotInfoExtended): IBotListEntry => {
   const entry: IBotListEntry = {
+    id: bot.codeId,
     codeId: bot.codeId,
     arena: `${bot.arena.advanced ? "Advanced" : "Basic"} ${bot.arena.name}`,
     user: bot.user.username,
@@ -38,20 +40,27 @@ export const convertExtendedBotInfoToEntry = (bot: IBotInfoExtended): IBotListEn
   return entry;
 }
 
-const getDefaultColumns = (): IColumn[] => ([
-  { key: 'arena', name: 'Arena', fieldName: 'arena', minWidth: 100, maxWidth: 200, isResizable: true, isCollapsible: false },
-  { key: 'user', name: 'User', fieldName: 'user', minWidth: 100, maxWidth: 200, isResizable: true, isCollapsible: false },
-  { key: 'version', name: 'Version', fieldName: 'version', minWidth: 100, maxWidth: 200, isResizable: true, isCollapsible: false },
-  { key: 'rating', name: 'Rating', fieldName: 'rating', minWidth: 100, maxWidth: 200, isResizable: true, isCollapsible: false },
-  { key: 'lastSeen', name: 'Last Seen', fieldName: 'lastSeen', minWidth: 100, maxWidth: 200, isResizable: true },
-]);
+const getDefaultColumns = (): GridColDef[] => ([
+  { headerName: 'Arena', field: 'arena', flex: 1 },
+  { headerName: 'User', field: 'user', flex: 1 },
+  { headerName: 'Version', field: 'version', flex: 1 },
+  { headerName: 'Rating', field: 'rating', flex: 1 },
+  {
+    headerName: "Action", field: "action", flex: 1, renderCell: (cellValues) => {
+      return (<span><Button href={`/bots/${cellValues.row.codeId}`} variant="contained" color="secondary">
+        Details
+      </Button>
+      </span>
+      )
+    }
+  }]);
 
 export default class BotList extends Component<IBotListProps, IBotListState> {
 
   public constructor(props: IBotListProps) {
     super(props);
     this.state = {
-      currentPage: 0,
+      pageSize: DEFAULT_PAGE_SIZE,
       columns: getDefaultColumns(),
       bots: [],
       error: undefined
@@ -81,56 +90,28 @@ export default class BotList extends Component<IBotListProps, IBotListState> {
     }
   }
 
-  private getCurrentPage() {
-    const currentIndex = this.state.currentPage * this.props.itemsPerPage;
-    return this.state.bots.slice(currentIndex, currentIndex + this.props.itemsPerPage)
-  }
-
   public render() {
-    const pages = Math.floor(this.state.bots.length / this.props.itemsPerPage);
-    return (<div>
-      {this.state.bots.length === 0 ? (<div>loading...</div>) : ("")}
-      <DetailsList
-        compact={true}
-        items={this.getCurrentPage()}
-        columns={this.state.columns}
-        setKey="set"
-        layoutMode={DetailsListLayoutMode.justified}
-        ariaLabelForSelectionColumn="Toggle selection"
-        ariaLabelForSelectAllCheckbox="Toggle selection for all items"
-        checkButtonAriaLabel="select row"
-        checkboxVisibility={CheckboxVisibility.hidden}
-        onColumnResize={(col, width, index) => {
-          console.log("col resize", col, width, index);
-          if (col) {
-            col.currentWidth = width;
-          } else {
-            console.log("no col");
-          }
-        }}
-        onRenderItemColumn={(item, index, column) => {
-          if (!column) {
-            return;
-          }
-          const value = item[column.fieldName as keyof IBotListEntry] as string;
-          if (column.key === "user") {
-            return (<span><Link href={"/bots/" + item.codeId}>{value}</Link>          </span>);
-          }
-          return (<span>{value}</span>);
-        }}
-      />
-      <Pagination
-        selectedPageIndex={this.state.currentPage}
-        pageCount={pages}
-        onPageChange={(index) => {
-          this.setState({ currentPage: index });
-        }}
-        format={"buttons"}
-        firstPageIconProps={{ iconName: 'DoubleChevronLeft' }}
-        previousPageIconProps={{ iconName: 'ChevronLeft' }}
-        nextPageIconProps={{ iconName: 'ChevronRight' }}
-        lastPageIconProps={{ iconName: 'DoubleChevronRight' }}
-      />
-    </div>);
+    return (<Grid container spacing={3}>
+      <Grid item xs={12} >
+        <Paper
+          sx={{
+            p: 2,
+            display: 'flex',
+            flexDirection: 'column',
+            height: "70vh",
+          }}
+        >
+          <DataGrid
+            loading={this.state.bots.length === 0}
+            rows={this.state.bots}
+            columns={this.state.columns}
+            pageSize={this.state.pageSize}
+            onPageSizeChange={(newPageSize) => { this.setState({ pageSize: newPageSize }) }}
+            rowsPerPageOptions={[10, DEFAULT_PAGE_SIZE, 50]}
+            pagination
+          />
+        </Paper>
+      </Grid>
+    </Grid >);
   }
 }

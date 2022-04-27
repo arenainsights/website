@@ -35,3 +35,18 @@ export const getValidGamesWithCode = async (): Promise<AxiosResponse<ResponseGet
     throw error;
   }
 }
+
+export interface ResponseGetGameByCode {
+  game: IGameInfoExtended;
+}
+
+export const getGameByCode = async (code: string): Promise<AxiosResponse<ResponseGetGameByCode>> => {
+  try {
+    const game: AxiosResponse<ResponseGetGameByCode> = await axios.get(
+      versionedBaseUrl + "/games/" + code
+    );
+    return game;
+  } catch (error) {
+    throw error;
+  }
+}
