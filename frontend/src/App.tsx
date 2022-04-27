@@ -24,6 +24,8 @@ import GameDetails from './components/games/game-details';
 import GameList from './components/games/game-list';
 import LandingPage from './components/landing-page';
 import { sideBarItems } from './components/sidebar';
+import UserList from './components/users/user-list';
+import UserDetails from './components/users/users-details';
 
 
 const drawerWidth: number = 240;
@@ -186,8 +188,8 @@ function App() {
                   <Route path="/bots/:id" element={<BotProfile />} />
                   <Route path="/games" element={<GameList />} />
                   <Route path="/games/:code" element={<GameDetails />} />
-                  {/* <Route path="/users" element={<UserList  />} />
-        <Route path="/users/:id" element={<UserProfile />} /> */ }
+                  <Route path="/users" element={<UserList />} />
+                  <Route path="/users/:id" element={<UserDetails />} />
                   <Route path="*" element={<NotFoundPage />} />
                 </Routes>
               </BrowserRouter>
