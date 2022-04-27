@@ -1,6 +1,5 @@
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Icon, useMediaQuery } from '@mui/material';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -101,17 +100,12 @@ function App() {
       })
       .catch((err: Error) => console.log(err))
   }
-  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 
-  const theme = React.useMemo(
-    () =>
-      createTheme({
-        palette: {
-          mode: prefersDarkMode ? 'dark' : 'light',
-        },
-      }),
-    [prefersDarkMode],
-  );
+  const theme = createTheme({
+    palette: {
+      mode: 'dark'
+    },
+  });
 
 
   return (
@@ -136,9 +130,7 @@ function App() {
             >
               <MenuIcon />
             </IconButton>
-            <Icon>
-              <img src="/android-chrome-192x192.png" alt="arena insights Logo" height={"24px"} />
-            </Icon>
+
             {/*}
             <Typography
               component="h1"
