@@ -19,6 +19,7 @@ import './App.css';
 import BotDetails from './components/bots/bot-details';
 import BotList from './components/bots/bot-list';
 import NotFoundPage from './components/errors/not-found';
+import FameDashboard from './components/fame/fame';
 import Footer from './components/footer';
 import GameDetails from './components/games/game-details';
 import GameList from './components/games/game-list';
@@ -190,6 +191,7 @@ function App() {
                   <Route path="/games/:code" element={<GameDetails />} />
                   <Route path="/users" element={<UserList />} />
                   <Route path="/users/:id" element={<UserDetails />} />
+                  <Route path="/fame" element={<FameDashboard />} />
                   <Route path="*" element={<NotFoundPage />} />
                 </Routes>
               </BrowserRouter>

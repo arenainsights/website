@@ -1,8 +1,9 @@
+import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import ForumIcon from '@mui/icons-material/Forum';
 import HelpCenterIcon from '@mui/icons-material/HelpCenter';
 import LiveTvIcon from '@mui/icons-material/LiveTv';
 import PeopleIcon from '@mui/icons-material/People';
-import SmartToyIcon from '@mui/icons-material/SmartToy';
+import SmartToyIcon from "@mui/icons-material/SmartToy";
 import { Divider, ListItemButton, ListItemIcon, ListItemText, ListSubheader } from "@mui/material";
 import React from "react";
 
@@ -31,6 +32,12 @@ export const sideBarItems = (
         <SmartToyIcon />
       </ListItemIcon>
       <ListItemText primary="Bots" />
+    </ListItemButton>
+    <ListItemButton component="a" href="/fame/">
+      <ListItemIcon>
+        <EmojiEventsIcon />
+      </ListItemIcon>
+      <ListItemText primary="Fame" />
     </ListItemButton>
     <Divider />
     <ListSubheader component="div" inset>

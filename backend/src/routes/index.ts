@@ -2,6 +2,7 @@ import { Router } from "express";
 import { getArenas } from "../controllers/arenas";
 import { getBotRatings } from "../controllers/botratings";
 import { getBotById, getBots } from "../controllers/bots";
+import { getAllFameInfo } from "../controllers/fame";
 import { getGameByCode, getGames } from "../controllers/games";
 import { getMeta } from "../controllers/meta";
 import { getUserById, getUsers } from "../controllers/users";
@@ -25,6 +26,8 @@ router.get(`/${API_VERSION}/bots/:id`, getBotById);
 router.get(`/${API_VERSION}/bot-ratings/:id`, getBotRatings);
 
 router.get(`/${API_VERSION}/arenas`, getArenas);
+
+router.get(`/${API_VERSION}/fame/all`, getAllFameInfo);
 
 
 export default router

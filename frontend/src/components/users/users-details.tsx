@@ -154,7 +154,7 @@ export default function UserDetails() {
         </Paper>
 
       </Grid>
-      <Grid item xs={12} >
+      <Grid item xs={6} >
         <Paper
           sx={{
             p: 2,
@@ -163,9 +163,26 @@ export default function UserDetails() {
             maxHeight: "240px"
           }}
         >
+          <Typography> Games played</Typography>
           <Line data={{
             labels,
-            datasets: [globalGamesPlayedDataSet, fameDataSet]
+            datasets: [globalGamesPlayedDataSet]
+          }} style={{ maxHeight: "200px" }} />
+        </Paper>
+      </Grid>
+      <Grid item xs={6} >
+        <Paper
+          sx={{
+            p: 2,
+            display: 'flex',
+            flexDirection: 'column',
+            maxHeight: "240px"
+          }}
+        >
+          <Typography> Fame</Typography>
+          <Line data={{
+            labels,
+            datasets: [fameDataSet]
           }} style={{ maxHeight: "200px" }} />
         </Paper>
       </Grid>
@@ -177,6 +194,7 @@ export default function UserDetails() {
             flexDirection: 'column',
           }}
         >
+          <Typography>Rating</Typography>
           <Line data={{
             labels,
             datasets: ratingDataSets
@@ -191,6 +209,7 @@ export default function UserDetails() {
             flexDirection: 'column',
           }}
         >
+          <Typography>Rank</Typography>
           <Line data={{
             labels,
             datasets: rankDataSets

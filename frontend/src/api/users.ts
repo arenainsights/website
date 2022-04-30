@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { versionedBaseUrl } from ".";
-import { IUserInfo } from "../../../backend/src/controllers/games";
 import { IUserInfoExtended } from "../../../backend/src/controllers/users";
+import { IUserInfo } from "../../../backend/src/models/user-info-model";
 
 export interface ResponseGetUsers {
   users: IUserInfo[];
