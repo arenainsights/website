@@ -101,7 +101,8 @@ export default function FameDashboard() {
           <Line data={{
             labels,
             datasets: fameDataSets
-          }} style={{ maxHeight: "200px" }} /> </Paper>
+          }} /> </Paper>
+
 
       </Grid>
     </Grid >
