@@ -6,6 +6,7 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import React, { Component } from "react";
 import { IGameInfoExtended } from "../../../../backend/src/controllers/games";
 import { getValidGamesWithCode } from "../../api/games";
+import { getArenaNameFromInfo } from '../../utils/utils';
 import CopyButton from "../utility/copy-button";
 
 
@@ -54,7 +55,7 @@ export const convertExtendedGameInfoToEntry = (game: IGameInfoExtended): IGameLi
   }
   const entry: IGameListEntry = {
     id: game.gameId,
-    arena: `${game.arena.advanced ? "Advanced" : "Basic"} ${game.arena.name}`,
+    arena: getArenaNameFromInfo(game.arena),
     created: game.gameCreated,
     bots: botInfos.join(" vs "),
     winner: winnerInfo,

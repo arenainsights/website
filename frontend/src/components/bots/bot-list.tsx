@@ -3,6 +3,7 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import React, { Component } from "react";
 import { IBotInfoExtended } from "../../../../backend/src/controllers/bots";
 import { getAllBots } from "../../api/bots";
+import { getArenaNameFromInfo } from "../../utils/utils";
 
 
 export interface IBotListEntry {
@@ -31,7 +32,7 @@ export const convertExtendedBotInfoToEntry = (bot: IBotInfoExtended): IBotListEn
   const entry: IBotListEntry = {
     id: bot.codeId,
     codeId: bot.codeId,
-    arena: `${bot.arena.advanced ? "Advanced" : "Basic"} ${bot.arena.name}`,
+    arena: getArenaNameFromInfo(bot.arena),
     user: bot.user.username,
     version: bot.version,
     rating: bot.rating,

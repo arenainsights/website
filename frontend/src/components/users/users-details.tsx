@@ -11,6 +11,7 @@ import { IArenaInfo } from '../../../../backend/src/controllers/games';
 import { IUserInfoExtended } from '../../../../backend/src/controllers/users';
 import { getAllArenas } from "../../api/arenas";
 import { getUserById } from "../../api/users";
+import { getArenaNameFromInfo } from '../../utils/utils';
 
 export default function UserDetails() {
   ChartJS.register(
@@ -91,7 +92,7 @@ export default function UserDetails() {
         gamesPlayedData[index] = rating.gamesPlayed;
       }
     }
-    const label = `${arena.advanced ? "Advanced" : "Basic"} ${arena.name}`;
+    const label = getArenaNameFromInfo(arena);
     ratingDataSets.push({
       label,
       data: ratingData,
