@@ -1,3 +1,4 @@
+import AddLinkIcon from '@mui/icons-material/AddLink';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import ForumIcon from '@mui/icons-material/Forum';
 import HelpCenterIcon from '@mui/icons-material/HelpCenter';
@@ -36,6 +37,12 @@ export const sideBarItems = (
     <ListItemButton component="a" href="/fame/">
       <ListItemIcon>
         <EmojiEventsIcon />
+      </ListItemIcon>
+      <ListItemText primary="Fame" />
+    </ListItemButton>
+    <ListItemButton component="a" href="/link-game/">
+      <ListItemIcon>
+        <AddLinkIcon />
       </ListItemIcon>
       <ListItemText primary="Fame" />
     </ListItemButton>

@@ -22,6 +22,7 @@ import NotFoundPage from './components/errors/not-found';
 import FameDashboard from './components/fame/fame';
 import Footer from './components/footer';
 import GameDetails from './components/games/game-details';
+import GameLinkForm from './components/games/game-link-form';
 import GameLinker from './components/games/game-linker';
 import GameList from './components/games/game-list';
 import LandingPage from './components/landing-page';
@@ -193,6 +194,7 @@ function App() {
                   <Route path="/users" element={<UserList />} />
                   <Route path="/users/:id" element={<UserDetails />} />
                   <Route path="/fame" element={<FameDashboard />} />
+                  <Route path="/link-game" element={<GameLinkForm />} />
                   <Route path='/link-game/:code' element={<GameLinker />} />
                   <Route path="*" element={<NotFoundPage />} />
                 </Routes>
