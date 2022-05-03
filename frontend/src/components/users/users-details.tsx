@@ -167,8 +167,7 @@ export default function UserDetails() {
           <Typography> Games played</Typography>
           <Line data={{
             labels,
-            datasets: [{ ...globalGamesPlayedDataSet, stack: "1" },
-            ...gamesPlayedDatasets.map(g => ({ ...g, stack: "2" }))]
+            datasets: [globalGamesPlayedDataSet]
           }} style={{ maxHeight: "200px" }} />
         </Paper>
       </Grid>
@@ -217,8 +216,21 @@ export default function UserDetails() {
             datasets: rankDataSets
           }} />
         </Paper>
-
-
+      </Grid>
+      <Grid item xs={6} >
+        <Paper
+          sx={{
+            p: 2,
+            display: 'flex',
+            flexDirection: 'column',
+          }}
+        >
+          <Typography>Games Played By Arena</Typography>
+          <Line data={{
+            labels,
+            datasets: gamesPlayedDatasets
+          }} />
+        </Paper>
       </Grid>
     </Grid >
   )
