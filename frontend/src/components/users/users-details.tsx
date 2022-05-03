@@ -167,7 +167,8 @@ export default function UserDetails() {
           <Typography> Games played</Typography>
           <Line data={{
             labels,
-            datasets: [globalGamesPlayedDataSet]
+            datasets: [{ ...globalGamesPlayedDataSet, stack: "1" },
+            ...gamesPlayedDatasets.map(g => ({ ...g, stack: "2" }))]
           }} style={{ maxHeight: "200px" }} />
         </Paper>
       </Grid>
