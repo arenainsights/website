@@ -70,7 +70,7 @@ export default function UserDetails() {
   for (const rating of profile.ratings) {
     labelSet.add(getDateFromMeta(rating));
   }
-  const labels = Array.from(labelSet).sort((a, b) => a.localeCompare(b));
+  const labels = Array.from(labelSet).sort((a, b) => Date.parse(a) - Date.parse(b));
   const ratingDataSets = [];
   const rankDataSets = [];
   const gamesPlayedDatasets = [];

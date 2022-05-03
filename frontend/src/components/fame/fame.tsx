@@ -65,7 +65,7 @@ export default function FameDashboard() {
   for (const rating of fameInfos) {
     labelSet.add(getDateFromMeta(rating));
   }
-  const labels = Array.from(labelSet).sort((a, b) => a.localeCompare(b));
+  const labels = Array.from(labelSet).sort((a, b) => Date.parse(a) - Date.parse(b));
   const fameDataSets = [];
   for (const user of allUsers) {
     const relevantFame = fameInfos.filter(r => r.meta.userId === user.userId);
