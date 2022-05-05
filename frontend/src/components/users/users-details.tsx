@@ -64,6 +64,8 @@ export default function UserDetails() {
     return (<div>error loading arenas</div>);
   }
 
+  const aliases = profile.aliases.filter(a => a.username !== profile?.username).map(a => a.username);
+
   const getDateFromMeta = (rating: { date: string | Date }) => (new Date(rating.date)).toLocaleDateString();
 
   const labelSet = new Set<string>();
@@ -151,7 +153,8 @@ export default function UserDetails() {
             flexDirection: 'column',
           }}
         >
-          <Typography> User: {profile.username}</Typography>
+          <Typography>User: {profile.username}</Typography>
+          {(aliases.length > 0) ? (<Typography>Aliases: {aliases.join(", ")}</Typography>) : (<span></span>)}
         </Paper>
 
       </Grid>

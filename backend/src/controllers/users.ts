@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { IUserAlias } from "../models/user-alias-model";
 import { IUserArenaInfo } from "../models/user-arena-info-model";
 import { IUserFame } from "../models/user-fame-series";
 import { IUserGamesPlayed } from "../models/user-games-played-series";
@@ -19,6 +20,7 @@ export interface IUserInfoExtended extends IUserInfo {
   ratings: IUserRating[];
   fames: IUserFame[];
   globalGamesPlayed: IUserGamesPlayed[]
+  aliases: IUserAlias[]
 }
 
 
@@ -57,6 +59,14 @@ export const getUserById = async (req: Request, res: Response): Promise<void> =>
           localField: "userId",
           foreignField: "meta.userId",
           as: "ratings"
+        }
+      },
+      {
+        $lookup: {
+          from: "useraliases",
+          localField: "userId",
+          foreignField: "userId",
+          as: "aliases"
         }
       }
     ]);
