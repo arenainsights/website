@@ -2,11 +2,14 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { Grid, Link, Paper, TextField, Typography } from '@mui/material';
 import { useState } from 'react';
 import CopyButton from "../utility/copy-button";
+import { URL_STUB_ARENA_GAME } from './game-linker';
 
 export default function GameLinkForm() {
 
   let [code, setCode] = useState<string>("");
-
+  if (code && code.startsWith(URL_STUB_ARENA_GAME)) {
+    code = code.replace(URL_STUB_ARENA_GAME, "");
+  }
   return (
     <Grid container spacing={3}>
       <Grid item xs={12} xl={6}>
