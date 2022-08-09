@@ -194,8 +194,9 @@ function App() {
                   <Route path="/users" element={<UserList />} />
                   <Route path="/users/:id" element={<UserDetails />} />
                   <Route path="/fame" element={<FameDashboard />} />
+                  <Route path="/lg/:code*" element={<GameLinker />} />
                   <Route path="/link-game" element={<GameLinkForm />} />
-                  <Route path='/link-game/:code+' element={<GameLinker />} />
+                  <Route path='/link-game/:code*' element={<GameLinker />} />
                   <Route path="*" element={<NotFoundPage />} />
                 </Routes>
               </BrowserRouter>
