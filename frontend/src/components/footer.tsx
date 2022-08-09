@@ -4,7 +4,7 @@ import { IMeta } from "../../../backend/src/models/meta-model";
 function Footer(props: { meta: IMeta }) {
   return (<span>
     <Typography variant="body2" color="text.secondary" align="center" sx={{ pt: 4 }}>
-      database: {props.meta.userCount} users, {props.meta.gameCount} games, {props.meta.botCount} bots.
+      database: {props.meta.userCount} users, {props.meta.gameCount} games.
       <br />
       scraping: last run: {props.meta.lastRun}, last full run: {props.meta.lastFullRun}
       <br />
