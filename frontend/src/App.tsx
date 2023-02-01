@@ -29,6 +29,8 @@ import LandingPage from './components/landing-page';
 import { sideBarItems } from './components/sidebar';
 import UserList from './components/users/user-list';
 import UserDetails from './components/users/users-details';
+import 'devextreme/dist/css/dx.light.css';
+import Button from 'devextreme-react/button';
 
 
 const drawerWidth: number = 240;

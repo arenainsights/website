@@ -1,26 +1,20 @@
 import { Grid, Paper, Typography } from '@mui/material';
-import {
-  CategoryScale, Chart as ChartJS, Legend, LinearScale, LineElement, PointElement, Title,
-  Tooltip
-} from 'chart.js';
 import { useEffect, useState } from "react";
-import { Line } from 'react-chartjs-2';
 import stc from 'string-to-color';
 import { IUserFame } from '../../../../backend/src/models/user-fame-series';
 import { IUserInfo } from '../../../../backend/src/models/user-info-model';
 import { getAllFameInfos } from '../../api/fame';
 import { getAllUsers } from '../../api/users';
 
+import Chart, {
+  ArgumentAxis,
+  Series,
+  ZoomAndPan,
+  Legend,
+  ScrollBar,
+} from 'devextreme-react/chart';
+
 export default function FameDashboard() {
-  ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend
-  );
 
   let [allUsers, setAllUsers] = useState<IUserInfo[]>([]);
   let [fameInfos, setFameInfo] = useState<IUserFame[]>([]);
@@ -61,30 +55,27 @@ export default function FameDashboard() {
 
   const getDateFromMeta = (rating: { date: string | Date }) => (new Date(rating.date)).toLocaleDateString();
 
-  const labelSet = new Set<string>();
-  for (const rating of fameInfos) {
-    labelSet.add(getDateFromMeta(rating));
+  const idToUser :Record<string,string> = {};
+  for(const user of allUsers) {
+    idToUser[user.userId] = user.username;
   }
-  const labels = Array.from(labelSet).sort((a, b) => Date.parse(a) - Date.parse(b));
-  const fameDataSets = [];
-  for (const user of allUsers) {
-    const relevantFame = fameInfos.filter(r => r.meta.userId === user.userId);
-    const fameData = new Array(labels.length);
-    for (const f of relevantFame) {
-      const date = getDateFromMeta(f);
-      const index = labels.findIndex((d) => d === date);
-      if (index >= 0) {
-        fameData[index] = f.fame;
-      }
-    }
+ const data = new Map<string, Record<string,number>>();
+for(const info of fameInfos) {
+  const date = getDateFromMeta(info);
+  const entry :Record<string, number>= data.get(date) || {};
+  entry[idToUser[info.meta.userId]] = info.fame;
+  data.set(date, entry);
+}
 
-    const label = user.username;
-    fameDataSets.push({
-      label,
-      data: fameData,
-      borderColor: stc(label)
-    });
-  }
+const viz = [];
+for(const keyVal of Array.from(data.entries())) {
+  viz.push({
+    date: keyVal[0],
+    ...keyVal[1]
+  })
+}
+
+  console.log(viz);
 
 
   return (
@@ -98,10 +89,19 @@ export default function FameDashboard() {
           }}
         >
           <Typography>Fame (top 20)</Typography>
-          <Line data={{
-            labels,
-            datasets: fameDataSets
-          }} /> </Paper>
+          <Chart
+        id="chart"
+        palette="Harmony Light"
+        dataSource={viz}>
+
+
+        <ArgumentAxis />
+        <ScrollBar visible={true} />
+        <ZoomAndPan argumentAxis="both" />
+        <Legend visible={true} />
+      </Chart>
+          
+          </Paper>
 
 
       </Grid>
